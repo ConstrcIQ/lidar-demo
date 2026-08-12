@@ -13,17 +13,21 @@ Grænsefladen viser status, antal mesh-brikker, antal trekanter, og har Start / 
 
 Apples compiler kører kun på macOS. Vi låner derfor en Mac gratis hos GitHub i de par minutter, byggeriet tager.
 
-### Trin 1 — Læg projektet på GitHub
+### Trin 1 — Skub ændringer op
 
-Opret et **offentligt** repository på github.com (offentligt er vigtigt: så er Mac-maskinerne gratis og uden minutloft). Kør derefter i denne mappe:
+Repoet ligger på https://github.com/ConstrcIQ/lidar-demo (offentligt — det er dét, der gør Mac-maskinerne gratis og uden minutloft). Efter en ændring:
 
 ```bash
-git init && git add -A && git commit -m "LiDAR demo" && git branch -M main && git remote add origin https://github.com/DIT-BRUGERNAVN/lidar-demo.git && git push -u origin main
+git add -A && git commit -m "beskriv ændringen" && git push
 ```
 
 ### Trin 2 — Vent på byggeriet
 
-Gå til fanen **Actions** i dit repo. Der kører et job der hedder "Byg usigneret IPA". Tager 3-6 minutter. Når det er grønt, ligger der en fil at hente nederst på siden: `LidarDemo-ipa`. Hent den og pak zip-filen ud — indeni ligger `LidarDemo.ipa`.
+Hvert push starter jobbet "Byg usigneret IPA" under fanen **Actions**. Tager 3-6 minutter. Når det er grønt, ligger `LidarDemo-ipa` klar nederst på siden. Eller hent den direkte:
+
+```bash
+gh run download -n LidarDemo-ipa -D "$HOME/Desktop/LidarDemo"
+```
 
 ### Trin 3 — Installér på iPhone
 
