@@ -24,7 +24,7 @@ targets:
     info:
       path: Support/Info.plist
       properties:
-        CFBundleDisplayName: LiDAR Demo
+        CFBundleDisplayName: Reps
         CFBundleShortVersionString: "0.1"
         UILaunchScreen: {}
         UIRequiredDeviceCapabilities: [arm64, arkit]
