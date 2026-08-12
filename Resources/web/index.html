@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>REPS</title>
+<link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+
+<div class="app">
+
+  <header class="sys">
+    <span class="mark">REPS</span>
+    <span class="ver" data-bind="ver">v1.0.0</span>
+    <span class="spacer"></span>
+    <span class="rate" data-bind="rate">—</span>
+    <span class="lamp" data-bind="lamp"></span>
+    <span class="sysstate" data-bind="sysState">INAKTIV</span>
+  </header>
+
+  <main class="stage">
+
+  <!-- ══════════════════════ SCREENING ══════════════════════ -->
+  <section class="screen" data-screen="onboarding" hidden>
+    <div class="content">
+      <div class="steps" data-bind="steps"></div>
+      <h2 class="q" data-bind="qTitle">—</h2>
+      <p class="qhint" data-bind="qHint"></p>
+      <div class="opts" data-bind="opts"></div>
+    </div>
+    <div class="dock">
+      <div class="pair">
+        <button class="btn ghost" data-bind="qBack">Tilbage</button>
+        <button class="btn" data-bind="qNext" disabled>Videre</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" data-screen="program" hidden>
+    <div class="content">
+      <div class="sec">Dit udgangspunkt</div>
+      <div class="hero four">
+        <div><b data-bind="pSets">—</b><span>Sæt</span></div>
+        <div><b data-bind="pReps">—</b><span>Reps</span></div>
+        <div><b data-bind="pLevel">—</b><span>Niveau</span></div>
+        <div><b data-bind="pLimits">—</b><span>Hensyn</span></div>
+      </div>
+      <p class="calib" data-bind="pGoal"></p>
+
+      <div class="sec">Hvad det ændrer</div>
+      <ul class="why" data-bind="pWhy"></ul>
+
+      <div class="sec">Krav der gælder for dig</div>
+      <table class="tbl dense"><tbody data-bind="pThresholds"></tbody></table>
+    </div>
+    <div class="dock"><button class="btn" data-go="home">Fortsæt</button></div>
+  </section>
+
+  <!-- ══════════════════════ HJEM ══════════════════════ -->
+  <section class="screen tabbed" data-screen="home" hidden>
+    <div class="content">
+      <div class="today">
+        <div class="tlabel">I dag</div>
+        <div class="tbig"><span data-bind="todayReps">0</span><small> reps</small></div>
+        <div class="tsub" data-bind="todaySub">Intet sæt endnu</div>
+      </div>
+
+      <button class="cta" data-go="placement">
+        <span class="ctamain">Start sæt</span>
+        <span class="ctasub" data-bind="ctaSub">—</span>
+      </button>
+
+      <div class="sec">Status</div>
+      <table class="tbl dense">
+        <tbody>
+          <tr><td>Dage i træk</td><td class="r" data-bind="streak">0</td></tr>
+          <tr><td>Bedste rene</td><td class="r" data-bind="bestClean">0</td></tr>
+          <tr><td>Sæt i alt</td><td class="r" data-bind="sessions">0</td></tr>
+          <tr><td>Mod sidste uge</td><td class="r" data-bind="delta">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ PROFIL ══════════════════════ -->
+  <section class="screen tabbed" data-screen="profile" hidden>
+    <div class="content">
+      <div class="sec">Program</div>
+      <table class="tbl dense"><tbody data-bind="profProgram"></tbody></table>
+      <button class="btn ghost thin" data-bind="redo">Tag screening om</button>
+
+      <div class="sec">Krop</div>
+      <table class="tbl dense"><tbody data-bind="athlete"></tbody></table>
+      <button class="btn ghost thin" data-go="scan">Scan krop</button>
+
+      <div class="sec">Krav</div>
+      <table class="tbl dense"><tbody data-bind="profThresholds"></tbody></table>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ LOG ══════════════════════ -->
+  <section class="screen tabbed" data-screen="log" hidden>
+    <div class="content">
+      <div class="sec">Rene reps pr. sæt</div>
+      <div class="chart" data-bind="chart"></div>
+      <div class="axis" data-bind="chartAxis"></div>
+
+      <div class="sec">Sæt-log</div>
+      <table class="tbl dense">
+        <thead><tr><th>Dato</th><th class="r">Reps</th><th class="r">Rene</th><th class="r">Andel</th></tr></thead>
+        <tbody data-bind="setlog"></tbody>
+      </table>
+
+      <div class="sec">Fejlfordeling</div>
+      <table class="tbl dense"><tbody data-bind="faults"></tbody></table>
+      <button class="btn ghost thin" data-bind="exportBtn">Eksportér CSV</button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════ OPSTILLING ══════════════════════ -->
+  <section class="screen" data-screen="placement" hidden>
+    <div class="content">
+      <div class="sec"><button class="back" data-go="home">◂</button>Opstilling</div>
+      <div class="viewfinder">
+        <video id="video" playsinline muted></video>
+        <canvas id="overlay"></canvas>
+        <i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br brr"></i>
+        <div class="vfhud"><span data-bind="vfLeft">INGEN SIGNAL</span><span data-bind="vfRight">—</span></div>
+      </div>
+      <div class="sec">Betingelser</div>
+      <table class="tbl">
+        <tbody>
+          <tr data-check="person"><td>Person i billedet</td><td class="r st">—</td></tr>
+          <tr data-check="horizontal"><td>Vandret krop</td><td class="r st">—</td></tr>
+          <tr data-check="full"><td>Fuld synlighed</td><td class="r st">—</td></tr>
+        </tbody>
+      </table>
+      <p class="hint" data-bind="hint">Stil kameraet fra siden, 1–1,5 m. Læg dig i planke og hold stille.</p>
+    </div>
+    <div class="dock"><button class="btn" data-go="live" data-bind="beginBtn" disabled>Afventer</button></div>
+  </section>
+
+  <!-- ══════════════════════ LIVE ══════════════════════ -->
+  <section class="screen" data-screen="live" hidden>
+    <div class="content live">
+      <div class="counter">
+        <span class="cnum" data-bind="count">0</span>
+        <span class="clbl">Reps <em data-bind="ofTarget"></em></span>
+      </div>
+      <canvas id="scopeCanvas" class="scope"></canvas>
+      <table class="tbl dense">
+        <tbody>
+          <tr><td>Albuevinkel</td><td class="r" data-bind="angle">—</td></tr>
+          <tr><td>Fase</td><td class="r" data-bind="phase">—</td></tr>
+          <tr><td>Hofteafvigelse</td><td class="r" data-bind="hip">—</td></tr>
+          <tr><td>Tærskel ned / op</td><td class="r" data-bind="thr">—</td></tr>
+          <tr><td>Spænd top / bund</td><td class="r" data-bind="span">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="dock"><button class="btn ghost" data-go="summary">Afslut sæt</button></div>
+  </section>
+
+  <!-- ══════════════════════ OVERSIGT ══════════════════════ -->
+  <section class="screen" data-screen="summary" hidden>
+    <div class="content">
+      <div class="sec">Sæt afsluttet</div>
+      <div class="hero">
+        <div><b data-bind="sumTotal">0</b><span>Reps</span></div>
+        <div><b data-bind="sumGood" class="gated">0</b><span>Rene</span></div>
+        <div><b data-bind="ecc">—</b><span>Ned</span></div>
+        <div><b data-bind="con">—</b><span>Op</span></div>
+        <div><b data-bind="dur">—</b><span>Varighed</span></div>
+      </div>
+      <div class="strip" data-bind="strip"></div>
+      <div class="axis" data-bind="axis"></div>
+      <p class="verdict" data-bind="sentence"></p>
+      <div class="sec">Rep for rep</div>
+      <table class="tbl dense">
+        <thead><tr><th>#</th><th>Kval</th><th class="r">Bund</th><th class="r">Ned</th><th class="r">Op</th><th>Hofte</th></tr></thead>
+        <tbody data-bind="repTable"></tbody>
+      </table>
+    </div>
+    <div class="dock"><button class="btn" data-go="home">Gem og luk</button></div>
+  </section>
+
+  <!-- ══════════════════════ SCANNING ══════════════════════ -->
+  <section class="screen" data-screen="scan" hidden>
+    <div class="content">
+      <div class="sec"><button class="back" data-go="profile">◂</button>Kropsscanning</div>
+      <div class="viewfinder tall">
+        <video id="scanVideo" playsinline muted></video>
+        <canvas id="scanOverlay"></canvas>
+        <i class="br tl"></i><i class="br tr"></i><i class="br bl"></i><i class="br brr"></i>
+        <div class="vfhud"><span data-bind="scanLeft">INGEN SIGNAL</span><span data-bind="scanRight">—</span></div>
+      </div>
+      <div class="dialrow">
+        <svg class="dial" viewBox="0 0 120 120" data-bind="dial" aria-label="Dækkede synsvinkler"></svg>
+        <table class="tbl dense flex1">
+          <tbody>
+            <tr><td>Retning</td><td class="r" data-bind="yaw">—</td></tr>
+            <tr><td>Dækning</td><td class="r" data-bind="coverage">0 / 8</td></tr>
+            <tr><td>Billeder</td><td class="r" data-bind="scanFrames">0</td></tr>
+            <tr><td>Højde (valgfri)</td><td class="r"><input class="inp" data-bind="height" inputmode="numeric" placeholder="cm"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="hint">Stil telefonen så hele kroppen er i billedet, 2–3 m væk. Armene lidt ud fra kroppen, og <b>drej langsomt hele vejen rundt</b> på cirka 20 sekunder. Hvert lem måles bedst set fra siden — derfor drejningen.</p>
+    </div>
+    <div class="dock"><button class="btn" data-go="scanresult" data-bind="scanBtn" disabled>Afventer dækning</button></div>
+  </section>
+
+  <section class="screen" data-screen="scanresult" hidden>
+    <div class="content">
+      <div class="sec"><button class="back" data-go="profile">◂</button>Atletprofil</div>
+      <div class="hero four">
+        <div><b data-bind="rStature">—</b><span>Højde</span></div>
+        <div><b data-bind="rArm">—</b><span>Arm</span></div>
+        <div><b data-bind="rTravel">—</b><span>Vej pr. rep</span></div>
+        <div><b data-bind="rCover">—</b><span>Dækning</span></div>
+      </div>
+      <p class="calib" data-bind="calibNote"></p>
+      <div class="sec">Mål</div>
+      <table class="tbl dense">
+        <thead><tr><th>Legemsdel</th><th class="r">cm</th><th class="r">±</th><th class="r">Vink.</th></tr></thead>
+        <tbody data-bind="measures"></tbody>
+      </table>
+      <div class="sec">Venstre mod højre</div>
+      <table class="tbl dense"><tbody data-bind="asym"></tbody></table>
+      <div class="sec">Forhold</div>
+      <table class="tbl dense"><tbody data-bind="ratios"></tbody></table>
+    </div>
+    <div class="dock"><button class="btn" data-go="profile">Gem og luk</button></div>
+  </section>
+
+  </main>
+
+  <!-- ══════════════════════ FANEBLADE ══════════════════════ -->
+  <nav class="tabs" data-bind="tabs" hidden>
+    <button data-tab="home"><b>Træn</b></button>
+    <button data-tab="profile"><b>Profil</b></button>
+    <button data-tab="log"><b>Log</b></button>
+  </nav>
+
+</div>
+
+<div class="toast" data-bind="toast" hidden></div>
+<script src="./js/mock.js"></script>
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

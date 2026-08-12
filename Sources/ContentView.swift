@@ -1,68 +1,81 @@
 import SwiftUI
+import WebKit
 
-/// Appens forløb. Ét skridt ad gangen — der er aldrig to valg på skærmen samtidig.
+/// Appen er en tynd skal om den webgrænseflade, der allerede er bygget.
+///
+/// Valget er bevidst: grænsefladen skal kunne rettes på et sekund i en browser
+/// i stedet for et kvarter gennem Apples byggeserver. Først når udtrykket og
+/// algoritmen står fast, giver det mening at oversætte til rigtig Swift.
+///
+/// Filerne ligger inde i appen, og `mock.js` efterligner serveren — så alle
+/// skærme kan gennemgås uden PC, uden netværk og uden kamera.
 struct ContentView: View {
-
-    private enum Route {
-        case home, placement, live, summary, history
-    }
-
-    @State private var route: Route = .home
-    @State private var completedSet: WorkoutSet = MockData.goodSet
-    @State private var showingBadExample = false
-
     var body: some View {
-        ZStack {
-            Palette.bg.ignoresSafeArea()
+        WebShell()
+            .ignoresSafeArea()
+            .background(Color.black)
+    }
+}
 
-            switch route {
-            case .home:
-                HomeScreen(
-                    onStart: { go(.placement) },
-                    onHistory: { go(.history) }
-                )
-                .transition(.opacity)
+private struct WebShell: UIViewRepresentable {
 
-            case .placement:
-                PlacementScreen(
-                    onReady: { go(.live) },
-                    onBack: { go(.home) }
-                )
-                .transition(.opacity)
+    func makeUIView(context: Context) -> WKWebView {
+        let config = WKWebViewConfiguration()
+        config.allowsInlineMediaPlayback = true
+        config.mediaTypesRequiringUserActionForPlayback = []
 
-            case .live:
-                LiveScreen(onFinish: {
-                    completedSet = showingBadExample ? MockData.badSet : MockData.goodSet
-                    go(.summary)
-                })
-                .transition(.opacity)
+        let webView = WKWebView(frame: .zero, configuration: config)
+        webView.navigationDelegate = context.coordinator
+        // Uden dette hopper hele grænsefladen, når man ruller i en tabel —
+        // og en app, der gynger, føles som en hjemmeside.
+        webView.scrollView.bounces = false
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
+        webView.isOpaque = false
+        webView.backgroundColor = .clear
+        webView.allowsBackForwardNavigationGestures = false
 
-            case .summary:
-                SummaryScreen(
-                    set: completedSet,
-                    onSave: { go(.home) },
-                    onToggleExample: toggleExample
-                )
-                .transition(.opacity)
+        load(into: webView)
+        return webView
+    }
 
-            case .history:
-                HistoryScreen(onBack: { go(.home) })
-                    .transition(.opacity)
-            }
+    func updateUIView(_ uiView: WKWebView, context: Context) {}
+
+    func makeCoordinator() -> Coordinator { Coordinator() }
+
+    private func load(into webView: WKWebView) {
+        guard let index = Bundle.main.url(forResource: "index",
+                                          withExtension: "html",
+                                          subdirectory: "web") else {
+            webView.loadHTMLString(missingResources, baseURL: nil)
+            return
         }
-        .preferredColorScheme(.dark)
+        webView.loadFileURL(index, allowingReadAccessTo: index.deletingLastPathComponent())
     }
 
-    private func go(_ next: Route) {
-        withAnimation(.easeInOut(duration: 0.22)) { route = next }
+    /// Sker det, er webmappen ikke kommet med i bygningen. Bedre at sige det
+    /// end at vise en tom, hvid skærm uden forklaring.
+    private var missingResources: String {
+        """
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <div style="font:600 15px -apple-system;padding:40px;color:#111">
+        Webfilerne mangler i bygningen.<br><br>
+        <span style="font-weight:400;color:#666">
+        Mappen <code>Resources/web</code> kom ikke med som ressource.</span></div>
+        """
     }
 
-    /// Foreløbig: lader et tryk på rep-striben skifte mellem et godt og et dårligt sæt,
-    /// så designets ærlighed kan efterprøves på selve enheden. Fjernes med målingerne.
-    private func toggleExample() {
-        showingBadExample.toggle()
-        withAnimation(.easeOut(duration: 0.25)) {
-            completedSet = showingBadExample ? MockData.badSet : MockData.goodSet
+    final class Coordinator: NSObject, WKNavigationDelegate {
+        /// Alt uden for appen åbnes i Safari frem for at overtage skallen.
+        func webView(_ webView: WKWebView,
+                     decidePolicyFor navigationAction: WKNavigationAction,
+                     decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if let url = navigationAction.request.url,
+               url.scheme == "http" || url.scheme == "https" {
+                UIApplication.shared.open(url)
+                decisionHandler(.cancel)
+                return
+            }
+            decisionHandler(.allow)
         }
     }
 }
