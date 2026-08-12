@@ -50,6 +50,17 @@ final class TrackingSession: NSObject, ObservableObject {
     /// Al analyse foregår her, aldrig på hovedtråden.
     private let processingQueue = DispatchQueue(label: "dk.lidardemo.tracking", qos: .userInitiated)
 
+    /// Tælleren der adskiller "denne kørsel" fra den forrige.
+    ///
+    /// `session.pause()` standser kun fremtidige billeder — et billede der allerede var
+    /// undervejs bliver færdiganalyseret bagefter og ville ellers nå at male et forældet
+    /// skelet op på en skærm, brugeren lige har sat på pause. Derfor mærkes hvert billede
+    /// med den kørsel det hører til, og resultatet kasseres, hvis kørslen er skiftet.
+    /// De to tællere holdes med vilje adskilt: den ene røres kun af analysekøen, den anden
+    /// kun af hovedtråden, så ingen af dem læses og skrives fra to tråde på én gang.
+    private var queueGeneration = 0
+    private var mainGeneration = 0
+
     override init() {
         super.init()
         arView.automaticallyConfigureSession = false
@@ -71,15 +82,30 @@ final class TrackingSession: NSObject, ObservableObject {
         config.planeDetection = []
 
         arView.session.run(config, options: [.resetTracking, .removeExistingAnchors])
-        tracker.reset()
+
+        mainGeneration += 1
+        // `tracker` bliver læst og ændret af analysekøen ved hvert billede. Nulstilles den
+        // herfra — fra hovedtråden — kan de to tråde rive i den samme tilstand samtidig,
+        // og Swifts eksklusivitetstjek slår appen ihjel. Derfor sendes nulstillingen ind
+        // på analysekøen, så alt der rører trackeren sker ét sted.
+        processingQueue.async {
+            self.queueGeneration += 1
+            self.tracker.reset()
+            self.lastProcessed = 0
+            self.rateWindow.removeAll()
+        }
+
         isRunning = true
         statusText = "Ret kameraet mod en person."
     }
 
     func pause() {
         arView.session.pause()
+        mainGeneration += 1
+        processingQueue.async { self.queueGeneration += 1 }
         isRunning = false
         people = []
+        analysisRate = 0
         statusText = "På pause."
     }
 
@@ -135,8 +161,13 @@ final class TrackingSession: NSObject, ObservableObject {
 
         recordRate(at: time)
         let rate = currentRate
+        let generation = queueGeneration
 
         DispatchQueue.main.async {
+            // Nået for sent: brugeren har sat på pause eller startet forfra, mens dette
+            // billede blev analyseret. Smid det væk frem for at male et forældet skelet op.
+            guard generation == self.mainGeneration, self.isRunning else { return }
+
             self.people = snapshots
             self.analysisRate = rate
             if !snapshots.isEmpty {

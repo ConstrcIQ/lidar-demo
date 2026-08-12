@@ -100,11 +100,16 @@ struct TrackingScreen: View {
                                onReset: { session.pause(); session.start() })
                 }
                 .padding(.horizontal, 16)
-                .padding(.bottom, 24)
+                .padding(.bottom, 44)
             }
             .onAppear { session.setViewport(proxy.size) }
             .onChange(of: proxy.size) { _, newSize in session.setViewport(newSize) }
         }
+        // ARView tegner kamerabilledet helt ud til kanten. Måler GeometryReader derimod
+        // kun det sikre område inden for Dynamic Island og hjemmeindikatoren, regner vi
+        // skelettets skærmplacering ud fra en ramme, der er ~90 punkter for lav — og så
+        // skrider skelettet væk fra personen, mest i toppen og bunden af billedet.
+        .ignoresSafeArea()
         .statusBarHidden()
         .onDisappear { session.pause() }
     }
