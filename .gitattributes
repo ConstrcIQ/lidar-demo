@@ -1,0 +1,2 @@
+# Byggeriet kører på macOS. Hold linjeskift som LF, ellers fejler shell-trinnene.
+* text=auto eol=lf

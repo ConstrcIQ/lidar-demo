@@ -1,0 +1,44 @@
+name: Byg usigneret IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Installér XcodeGen
+        run: brew install xcodegen
+
+      - name: Generér Xcode-projekt
+        run: xcodegen generate
+
+      - name: Byg arkiv uden signering
+        run: |
+          xcodebuild archive \
+            -project LidarDemo.xcodeproj \
+            -scheme LidarDemo \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/LidarDemo.xcarchive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Pak til .ipa
+        run: |
+          mkdir -p build/Payload
+          cp -R build/LidarDemo.xcarchive/Products/Applications/LidarDemo.app build/Payload/
+          cd build && zip -qry LidarDemo.ipa Payload
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: LidarDemo-ipa
+          path: build/LidarDemo.ipa
+          if-no-files-found: error

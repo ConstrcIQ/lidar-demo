@@ -1,0 +1,35 @@
+name: LidarDemo
+options:
+  bundleIdPrefix: app.lidardemo
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+
+targets:
+  LidarDemo:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: app.lidardemo.scanner
+        PRODUCT_NAME: LidarDemo
+        MARKETING_VERSION: "0.1"
+        CURRENT_PROJECT_VERSION: "1"
+        TARGETED_DEVICE_FAMILY: "1"
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: NO
+        ENABLE_USER_SCRIPT_SANDBOXING: NO
+    info:
+      path: Support/Info.plist
+      properties:
+        CFBundleDisplayName: LiDAR Demo
+        CFBundleShortVersionString: "0.1"
+        UILaunchScreen: {}
+        UIRequiredDeviceCapabilities: [arm64, arkit]
+        UIStatusBarStyle: UIStatusBarStyleLightContent
+        UIViewControllerBasedStatusBarAppearance: false
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        NSCameraUsageDescription: >-
+          Appen bruger kameraet og LiDAR-scanneren til at måle rummets geometri.
