@@ -10,6 +10,34 @@
 (function () {
   "use strict";
 
+  /* En fejl i JavaScript efterlader ellers bare en tom flade — sort i mørkt
+   * tema — og på en telefon er der ingen konsol at kigge i. Derfor males
+   * fejlen på skærmen. Det er grimt, og det er meningen. */
+  function report(kind, detail) {
+    const box = document.createElement("pre");
+    box.style.cssText =
+      "position:fixed;inset:0;z-index:9999;margin:0;padding:44px 16px;overflow:auto;" +
+      "background:#fff;color:#111;font:400 11px ui-monospace,monospace;white-space:pre-wrap";
+    box.textContent = `REPS kunne ikke starte\n\n${kind}\n\n${detail}`;
+    (document.body || document.documentElement).appendChild(box);
+  }
+
+  window.addEventListener("error", (e) => {
+    report(e.message || "Fejl", `${e.filename || "?"}:${e.lineno || "?"}\n\n${e.error?.stack || ""}`);
+  });
+  window.addEventListener("unhandledrejection", (e) => {
+    report("Uafsluttet løfte", String(e.reason?.stack || e.reason));
+  });
+
+  /* Kommer grænsefladen slet ikke i gang, siger vi det efter tre sekunder
+   * frem for at stå med en tom skærm på ubestemt tid. */
+  setTimeout(() => {
+    const anyVisible = [...document.querySelectorAll(".screen")].some((s) => !s.hidden);
+    if (!anyVisible) {
+      report("Ingen skærm blev vist", "Modulet app.js kørte formentlig aldrig.");
+    }
+  }, 3000);
+
   const QUESTIONS = [
     { key: "goal", title: "Hvad træner du for?", hint: "Det afgør, hvor hårdt appen dømmer dig.", multi: false,
       options: [
@@ -265,8 +293,11 @@
 
         if (state === "active") {
           // Albuevinklen svinger som en rigtig armbøjning: ~2,4 sek pr. rep.
+          // Plus og ikke minus: ved p=0 er armen strakt (178°, toppen), ved
+          // p=0,5 er den bøjet (82°, bunden). Med det modsatte fortegn viste
+          // skærmen "BOTTOM" samtidig med en strakt arm.
           const p = ((Date.now() - t0) / 1000) % 2.4 / 2.4;
-          this._angle = 130 - 48 * Math.cos(p * 2 * Math.PI);
+          this._angle = 130 + 48 * Math.cos(p * 2 * Math.PI);
           this._phase = p < 0.45 ? "descending" : p < 0.55 ? "bottom" : "ascending";
           if (elapsed - lastRep > 2.4) { lastRep = elapsed; this._count += 1; }
         }
