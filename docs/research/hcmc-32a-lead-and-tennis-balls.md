@@ -11,6 +11,20 @@ so section 2 assumes the goal is "buy a can of normal tennis balls near the base
 
 The requirement changed: a short **adapter** that goes from the blue 32A socket (PCE Typ 1232, 2P+E, 6h, IP67) to an ordinary household outlet. No 10 m lead is needed. If you need more reach, plug a normal Danish extension cord into the adapter.
 
+### Physical stores near the base (call first; stock not confirmed)
+None of these confirms a ready-made 32A→Schuko adapter on the shelf. Ask for the parts, and have the shop wire them together.
+
+| # | Store | Address | Phone | Why |
+|---|---|---|---|---|
+| 1 | Thiết bị điện Ngọc Vinh | C3/16A Phạm Hùng, Bình Hưng, Bình Chánh | 0901 418 556 (Zalo) | Closest. Panasonic distributor, and PCE plugs are sold under the Panasonic name in VN. |
+| 2 | Cửa hàng Phú Toàn (điện nước) | QL50, Bình Hưng, Bình Chánh | 0907 901 750 | Close. General electrical shop. |
+| 3 | Công ty TNHH Kỹ thuật Điện Việt | 160/57/36/1D Nguyễn Văn Quỳ, Phú Thuận, Q7 | 0938 567 902 | Listed as selling industrial plugs and sockets. In an alley, so it may be an office. |
+| 4 | Engineering Services | KC76/24 Huỳnh Tấn Phát, Tân Thuận Tây, Q7 | (028) 3777 0525 | Listed in the industrial plug/socket category. |
+| 5 | Chợ Dân Sinh | 104 Yersin, Q1 | — | Many electrical stalls. Best odds of having everything in one trip; about 8 km away. |
+
+Phone script: *"Anh/chị có phích cắm công nghiệp 32A 3 chấu màu xanh (2P+E, 230V) và ổ cắm Schuko 16A không? Có thể đấu thành bộ chuyển cho tôi, có aptomat 16A, không? Hôm nay mở cửa đến mấy giờ?"*
+(Do you have a blue 32A 3-pin industrial plug and a Schuko 16A outlet? Can you wire them into an adapter with a 16A breaker? What time do you close today?)
+
 ### Ready-made option (photos confirm the socket: blue, 3-pin, 32A, 6h)
 - **Lazada: "Bộ Ổ Cắm Và Phích Cắm Chuyển Đổi – Phích Cắm Điện 3 Chấu 32A Chuyển Sang Ổ Cắm Schuko 2 chấu Di Động 16A"**, seller Công ty TNHH Recess (registered at Saigon Centre, Q1):
   https://www.lazada.vn/products/bo-o-cam-va-phich-cam-chuyen-doi-phich-cam-dien-3-chau-chuyen-sang-o-cam-schuko-di-dong-i2360374766.html
