@@ -11,6 +11,16 @@ so section 2 assumes the goal is "buy a can of normal tennis balls near the base
 
 The requirement changed: a short **adapter** that goes from the blue 32A socket (PCE Typ 1232, 2P+E, 6h, IP67) to an ordinary household outlet. No 10 m lead is needed. If you need more reach, plug a normal Danish extension cord into the adapter.
 
+### Ready-made option (photos confirm the socket: blue, 3-pin, 32A, 6h)
+- **Lazada: "Bộ Ổ Cắm Và Phích Cắm Chuyển Đổi – Phích Cắm Điện 3 Chấu 32A Chuyển Sang Ổ Cắm Schuko 2 chấu Di Động 16A"**, seller Công ty TNHH Recess (registered at Saigon Centre, Q1):
+  https://www.lazada.vn/products/bo-o-cam-va-phich-cam-chuyen-doi-phich-cam-dien-3-chau-chuyen-sang-o-cam-schuko-di-dong-i2360374766.html
+  This is the only exact ready-made match found. Price and stock could not be read from here: Lazada is blocked in this research environment. Check the page for "còn hàng" (in stock), a blue **3-pin** 32A plug (not 5-pin, not 16A), and delivery time.
+  It most likely has no breaker inside. That is acceptable for low-power electronics, but don't run heaters or kettles through it.
+- Ask the seller on Zalo:
+  *"Shop còn hàng bộ chuyển phích công nghiệp 32A 3 chấu (2P+E, màu xanh) sang ổ cắm Schuko 16A không? Có aptomat bên trong không? Giao về Bình Chánh hôm nay/ngày mai được không?"*
+- Backup seller: Cơ Điện Minh Hùng / sacxe.net, hotline and Zalo **0937 697 095** (Biên Hòa, ships to HCMC). They sell Schuko power boxes and EV-charging adapters and can build one to order.
+- If none of these work out, build it yourself with the parts below (Chợ Dân Sinh or Phú Toàn).
+
 ### Must-have: a 16A breaker inside the adapter
 The 32A socket sits behind a 32A breaker. A household outlet and the cords plugged into it are rated 13–16A. Without a breaker of their own, an overload or a fault in a 16A cord would not trip anything and the cord could overheat. European 32A→16A adapters are sold with a built-in 16A MCB for exactly this reason. Since this will be used outdoors and we don't know whether the supply has an RCD, use a **16A RCBO (30 mA)**. It combines the overcurrent breaker and the earth-leakage protection in one part.
 
