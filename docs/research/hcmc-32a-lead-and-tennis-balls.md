@@ -11,16 +11,20 @@ so section 2 assumes the goal is "buy a can of normal tennis balls near the base
 
 The requirement changed: a short **adapter** that goes from the blue 32A socket (PCE Typ 1232, 2P+E, 6h, IP67) to an ordinary household outlet. No 10 m lead is needed. If you need more reach, plug a normal Danish extension cord into the adapter.
 
-### Physical stores near the base (call first; stock not confirmed)
-None of these confirms a ready-made 32A→Schuko adapter on the shelf. Ask for the parts, and have the shop wire them together.
+### Physical stores within ~20 min by scooter: final ranking for Sunday 11 Oct
+Researched by four parallel searches. Every .vn site was blocked from the research environment, so stock and opening hours come from search snippets. No shop's live stock was confirmed. **Call or Zalo before riding out.**
+Specialist shops in old D1 and D5 (Huỳnh Lai at Ký Con, Nguyễn Giang at Yersin, Điện Châu Á, Vật Tư 365) are listed as **closed on Sunday**.
 
-| # | Store | Address | Phone | Why |
-|---|---|---|---|---|
-| 1 | Thiết bị điện Ngọc Vinh | C3/16A Phạm Hùng, Bình Hưng, Bình Chánh | 0901 418 556 (Zalo) | Closest. Panasonic distributor, and PCE plugs are sold under the Panasonic name in VN. |
-| 2 | Cửa hàng Phú Toàn (điện nước) | QL50, Bình Hưng, Bình Chánh | 0907 901 750 | Close. General electrical shop. |
-| 3 | Công ty TNHH Kỹ thuật Điện Việt | 160/57/36/1D Nguyễn Văn Quỳ, Phú Thuận, Q7 | 0938 567 902 | Listed as selling industrial plugs and sockets. In an alley, so it may be an office. |
-| 4 | Engineering Services | KC76/24 Huỳnh Tấn Phát, Tân Thuận Tây, Q7 | (028) 3777 0525 | Listed in the industrial plug/socket category. |
-| 5 | Chợ Dân Sinh | 104 Yersin, Q1 | — | Many electrical stalls. Best odds of having everything in one trip; about 8 km away. |
+| # | Store | Address | Phone / Zalo | Evidence of stock | Sunday | Scooter |
+|---|---|---|---|---|---|---|
+| 1 | **Thiết bị điện Phương Minh** | E5 KDC Vạn Phát Hưng, KP4, Phú Thuận, Q7 | 0982 928 978 (Sino/Panasonic), hotline 0983 426 969, 028 3785 0392 | Website lists a Schneider 32A 3-pin plug (S56P332GY), the Sino Vanlock 32A range, Sino Schuko 16A sockets and MCBs: everything in one place | unknown | 15–20 min |
+| 2 | **TDM Tuấn Đức showroom** | 142 Gò Ô Môi, Phú Thuận, Q7 (same area as #1) | 028 6681 8685 | MPE dealer (MPE makes the MPN-0232 plug). The showroom may only carry household items | **open 8:00–11:00, 14:00–16:30** (tdm.vn) | ~25 min |
+| 3 | **Chợ Dân Sinh** (market stalls) | 104 Yersin, Q1 | market 028 3825 1130 | Industrial electrical goods and welding-machine stalls. No named stall confirmed | **open daily ~6/7:00–18:00**; stalls close from ~17:00 and some may be shut on Sunday | 20–25 min |
+| 4 | **Thiết bị điện Ngọc Vinh** | C3/16A Phạm Hùng, Bình Hưng | 0901 418 556, 0906 821 248, 093 850 2592 | Reportedly an official MPE distributor since 2024; wholesale | unknown | ~5 min |
+| 5 | Tống Gia (điện nước) | 9–11C Nguyễn Thị Thập, Q7 | 0909 323 380 | Household electrical only: Schuko socket and MCB possible, 32A plug unlikely | listed "open all day" | 12–15 min |
+
+**Plan for today:** Zalo #4, then #1. Phone #2 before 11:00. If none of them confirms, ride to #3 and look for stalls selling welding machines (máy hàn).
+**Fallback for Monday 7:30:** Vật Tư 365, 13-15 Đường số 7, An Lạc A, Bình Tân, 0912 917 977. It lists PCE F023-6 32A, PCE Schuko F105-0B, Panasonic RCBO and enclosures, and its phone line is open today 7:30–20:00, so you can reserve today. Other options: Điện Châu Á, 16-18 Trần Tướng Công, Q5, 0918 39 30 93; Huỳnh Lai, 129 Ký Con, Q1, 0938 984 282.
 
 Phone script: *"Anh/chị có phích cắm công nghiệp 32A 3 chấu màu xanh (2P+E, 230V) và ổ cắm Schuko 16A không? Có thể đấu thành bộ chuyển cho tôi, có aptomat 16A, không? Hôm nay mở cửa đến mấy giờ?"*
 (Do you have a blue 32A 3-pin industrial plug and a Schuko 16A outlet? Can you wire them into an adapter with a 16A breaker? What time do you close today?)
